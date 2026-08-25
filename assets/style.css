@@ -44,18 +44,18 @@ a{color:inherit;text-decoration:none}
 .nav{position:fixed;top:16px;left:16px;right:16px;z-index:50;display:flex;align-items:center;
   justify-content:space-between;gap:18px;padding:12px 22px;border-radius:14px;
   background:rgba(13,10,7,.72);border:1px solid rgba(74,163,232,.16);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden}
 .brand{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:1.35rem;
-  letter-spacing:.06em;display:flex;flex-direction:column;line-height:1}
+  letter-spacing:.06em;display:flex;flex-direction:column;line-height:1;min-width:0;flex-shrink:1}
 .brand-sub{font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:.58rem;
   letter-spacing:.24em;color:var(--text-secondary);margin-top:3px;text-transform:uppercase}
-.nav-links{display:flex;gap:26px}
-.nav-links a{font-size:.92rem;color:var(--text-secondary);transition:color .2s var(--ease-soft)}
+.nav-links{display:flex;gap:26px;flex-shrink:1;min-width:0}
+.nav-links a{font-size:.92rem;color:var(--text-secondary);transition:color .2s var(--ease-soft);white-space:nowrap}
 .nav-links a:hover{color:var(--accent-hover)}
 .nav-links a.active{color:var(--accent)}
 .nav-tel{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--accent);
   border:1px solid var(--accent-muted);padding:8px 14px;border-radius:999px;
-  transition:border-color .2s,color .2s}
+  transition:border-color .2s,color .2s;white-space:nowrap;flex-shrink:1}
 .nav-tel:hover{border-color:var(--accent);color:var(--accent-hover)}
 
 /* ============ HERO ============ */
@@ -168,12 +168,13 @@ a{color:inherit;text-decoration:none}
 /* masked line reveals keep descender room */
 .mask span{display:inline-block;padding-bottom:.14em;margin-bottom:-.14em}
 
-/* reveal choreography */
+/* reveal choreography — inner pages reveal per-part */
 [data-reveal] .part{opacity:0;transform:translateY(26px);
   transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);
   transition-delay:calc(var(--i,0)*80ms)}
 [data-reveal].in .part{opacity:1;transform:none}
 [data-reveal].done .part{transition-delay:0ms}
+.page-body [data-reveal] .part.in{opacity:1;transform:none}
 
 /* finder */
 .finder-form{margin-top:44px;display:flex;flex-direction:column;gap:22px;align-items:flex-start}
@@ -351,10 +352,9 @@ a{color:inherit;text-decoration:none}
 @keyframes pageIn{to{opacity:1;transform:none}}
 
 /* first content block on inner pages appears on load */
-.page-body .wrap > .part:first-child{opacity:0;transform:translateY(26px);
-  animation:pageIn .8s var(--ease-out) .35s forwards}
-.page-body .wrap > .part:nth-child(2){opacity:0;transform:translateY(26px);
-  animation:pageIn .8s var(--ease-out) .5s forwards}
+.page-body .wrap > .part:nth-child(1){animation:pageIn .8s var(--ease-out) .35s forwards}
+.page-body .wrap > .part:nth-child(2){animation:pageIn .7s var(--ease-out) .45s forwards}
+.page-body .wrap > .part:nth-child(3){animation:pageIn .8s var(--ease-out) .55s forwards}
 
 .page-body{position:relative;padding:80px clamp(20px,6vw,90px) 140px}
 .page-body .wrap{max-width:920px;margin:0 auto}

@@ -56,21 +56,37 @@
   /* ---------- reveal choreography ---------- */
   var revealEls = document.querySelectorAll('[data-reveal]');
   var seen = new WeakSet();
+  var isInnerPage = !!document.querySelector('.page-body');
 
-  document.querySelectorAll('.page-body .wrap > .part').forEach(function (el, i) {
-    if (i < 2) { seen.add(el); }
-  });
-
-  var revObs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting || seen.has(en.target)) return;
-      seen.add(en.target);
-      en.target.classList.add('in');
-      setTimeout(function () { en.target.classList.add('done'); }, 1400);
-      revObs.unobserve(en.target);
+  if (isInnerPage) {
+    /* Inner pages: observe individual .part elements, skip first 3 (load animation) */
+    var partEls = document.querySelectorAll('.page-body [data-reveal] .part');
+    partEls.forEach(function (el, i) {
+      if (i < 3) { seen.add(el); el.classList.add('in'); el.classList.add('done'); }
     });
-  }, { threshold: 0.18 });
-  revealEls.forEach(function (el) { revObs.observe(el); });
+    var revObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting || seen.has(en.target)) return;
+        seen.add(en.target);
+        en.target.classList.add('in');
+        setTimeout(function () { en.target.classList.add('done'); }, 1400);
+        revObs.unobserve(en.target);
+      });
+    }, { threshold: 0.15 });
+    partEls.forEach(function (el) { if (!seen.has(el)) revObs.observe(el); });
+  } else {
+    /* Landing page: observe wrappers as before */
+    var revObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting || seen.has(en.target)) return;
+        seen.add(en.target);
+        en.target.classList.add('in');
+        setTimeout(function () { en.target.classList.add('done'); }, 1400);
+        revObs.unobserve(en.target);
+      });
+    }, { threshold: 0.18 });
+    revealEls.forEach(function (el) { revObs.observe(el); });
+  }
 
   /* ---------- press-and-hold explode ---------- */
   var boomStage = document.getElementById('boomStage');
@@ -193,10 +209,14 @@
       document.body.classList.remove('rm');
       revealEls.forEach(function (el) { el.classList.remove('in'); el.classList.remove('done'); });
       seen = new WeakSet();
-      document.querySelectorAll('.page-body .wrap > .part').forEach(function (el, i) {
-        if (i < 2) { seen.add(el); }
-      });
-      revealEls.forEach(function (el) { revObs.observe(el); });
+      if (isInnerPage) {
+        document.querySelectorAll('.page-body [data-reveal] .part').forEach(function (el, i) {
+          if (i < 3) { seen.add(el); el.classList.add('in'); el.classList.add('done'); }
+        });
+        partEls.forEach(function (el) { if (!seen.has(el)) revObs.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { revObs.observe(el); });
+      }
       P = 0; doneLatch = false; paintBoom();
       if (boomStage) boomStage.classList.remove('done');
       if (boomBtn) boomBtn.hidden = false;
