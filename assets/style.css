@@ -1,4 +1,4 @@
-/* PartsGeek concept — dark cinematic, copper amber, shop-floor precision */
+/* Charlie's Auto Body Shop — dark cinematic, warm amber, shop-floor precision */
 
 :root{
   --canvas:#0d0a07;
@@ -52,36 +52,31 @@ a{color:inherit;text-decoration:none}
 .nav-links{display:flex;gap:26px}
 .nav-links a{font-size:.92rem;color:var(--text-secondary);transition:color .2s var(--ease-soft)}
 .nav-links a:hover{color:var(--accent-hover)}
+.nav-links a.active{color:var(--accent)}
 .nav-tel{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--accent);
   border:1px solid var(--accent-muted);padding:8px 14px;border-radius:999px;
   transition:border-color .2s,color .2s}
 .nav-tel:hover{border-color:var(--accent);color:var(--accent-hover)}
 
 /* ============ HERO ============ */
-.hero{height:780vh;position:relative}
-.stage{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--canvas)}
-.poster{position:absolute;inset:0;background-size:cover;background-position:center;
-  background-image:url("assets/hero-poster.jpg")}
+.hero{position:relative;height:0}
+.stage{position:fixed;inset:0;z-index:0;width:100vw;height:100vh;overflow:hidden;background:var(--canvas)}
+.poster{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;
+  background-image:url("hero-poster.jpg");z-index:0}
 #heroVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;transition:opacity .9s var(--ease-soft);will-change:transform}
+  opacity:0;transition:opacity .9s var(--ease-soft);z-index:1}
 .stage.video-ready #heroVideo{opacity:1}
-/* scrims fully removed per request: footage shows untouched */
 .scrim{display:none}
 
 .ring{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;
   color:var(--accent);opacity:0;transition:opacity .4s;z-index:6}
 .stage.loading .ring{opacity:1}
 
-/* caption bands */
-.bands{position:absolute;inset:0;z-index:4}
-.band{position:absolute;max-width:min(560px,86vw);opacity:0;text-shadow:var(--tshadow)}
-.band .btn{text-shadow:none}
-.b-left{left:clamp(24px,7vw,110px);top:50%;transform:translateY(-50%)}
-.b-right{right:clamp(24px,7vw,110px);top:46%;transform:translateY(-50%);text-align:right}
-.b-center{left:50%;bottom:9vh;transform:translateX(-50%);text-align:center;width:min(720px,90vw)}
-
-/* per-band scrims removed: captions ride on the text shadow alone */
-.band::before{content:none}
+/* caption bands — hidden, content scrolls over video */
+.bands{display:none}
+.hud{display:none}
+.cue{display:none}
+.static-copy{display:none}
 
 .h-display{font-family:"Big Shoulders Display",sans-serif;font-weight:800;
   font-size:clamp(2.6rem,6.4vw,5.4rem);line-height:.98;letter-spacing:.01em;
@@ -139,35 +134,36 @@ a{color:inherit;text-decoration:none}
 .static-copy .settle-sub{margin-top:16px}
 .static-copy .cta-row{margin-top:24px}
 
-/* the five static-hero gates — identical strings in main.js */
+/* the five static-hero gates — hidden since content scrolls over fixed video */
 @media (max-width:720px){
-  #heroVideo,.ring,.bands,.hud,.cue{display:none}
-  .static-copy{display:block}
+  .stage .ring,.stage .bands,.stage .hud,.stage .cue,.stage .static-copy{display:none}
 }
 @media (orientation:portrait) and (max-width:1024px){
-  #heroVideo,.ring,.bands,.hud,.cue{display:none}
-  .static-copy{display:block}
+  .stage .ring,.stage .bands,.stage .hud,.stage .cue,.stage .static-copy{display:none}
 }
 @media (orientation:portrait) and (pointer:coarse){
-  #heroVideo,.ring,.bands,.hud,.cue{display:none}
-  .static-copy{display:block}
+  .stage .ring,.stage .bands,.stage .hud,.stage .cue,.stage .static-copy{display:none}
 }
 @media (orientation:landscape) and (pointer:coarse) and (max-height:560px){
-  #heroVideo,.ring,.bands,.hud,.cue{display:none}
-  .static-copy{display:block}
+  .stage .ring,.stage .bands,.stage .hud,.stage .cue,.stage .static-copy{display:none}
 }
 @media (prefers-reduced-motion:reduce){
-  #heroVideo,.ring,.bands,.hud,.cue{display:none}
-  .static-copy{display:block}
+  .stage .ring,.stage .bands,.stage .hud,.stage .cue,.stage .static-copy{display:none}
 }
-@media (max-height:560px){.hud,.cue{display:none}}
+@media (max-height:560px){.stage .hud,.stage .cue{display:none!important}}
 
 /* ============ SECTIONS ============ */
-.sec{position:relative;padding:130px clamp(20px,6vw,90px);scroll-margin-top:90px}
+.sec{position:relative;padding:130px clamp(20px,6vw,90px);scroll-margin-top:90px;z-index:2}
 .wrap{max-width:1180px;margin:0 auto}
 .sec-h{font-family:"Big Shoulders Display",sans-serif;font-weight:800;text-transform:uppercase;
   font-size:clamp(2.2rem,4.6vw,3.9rem);line-height:1.02;letter-spacing:.01em}
 .lede{color:var(--text-secondary);max-width:52ch;font-size:1.08rem}
+
+/* scrollable content over fixed video */
+.hero-content{position:relative;z-index:2}
+.hero-content .sec,.hero-content .sec.zone-blue{background:transparent}
+.hero-content .foot{background:rgba(13,10,7,.95)}
+.hero-content .sec .wrap,.hero-content .sec .wrap *{text-shadow:0 2px 20px rgba(0,0,0,.9),0 1px 4px rgba(0,0,0,.95)}
 
 /* masked line reveals keep descender room */
 .mask span{display:inline-block;padding-bottom:.14em;margin-bottom:-.14em}
@@ -333,4 +329,89 @@ a{color:inherit;text-decoration:none}
   .sel-row{width:100%}
   .finder-form .btn{width:100%}
   .her-small{right:0;bottom:-10%}
+}
+
+/* ============ MULTI-PAGE ============ */
+.page-hero{position:relative;min-height:44vh;display:flex;align-items:flex-end;
+  padding:0 clamp(20px,6vw,90px) 70px;background:var(--canvas);overflow:hidden}
+.page-hero::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 30%,var(--canvas) 100%);z-index:1}
+.page-hero-inner{position:relative;z-index:2;max-width:1180px;margin:0 auto;width:100%}
+.page-hero .kicker{margin-bottom:16px}
+.page-hero .sec-h{font-size:clamp(2.4rem,5vw,4.2rem)}
+
+/* page-load entrance animation */
+.page-hero-inner .kicker,
+.page-hero-inner .sec-h,
+.page-hero-inner .sec-h span{opacity:0;transform:translateY(30px);
+  animation:pageIn .8s var(--ease-out) forwards}
+.page-hero-inner .kicker{animation-delay:.1s}
+.page-hero-inner .sec-h{animation-delay:.25s}
+.page-hero-inner .sec-h span{animation-delay:.25s}
+@keyframes pageIn{to{opacity:1;transform:none}}
+
+/* first content block on inner pages appears on load */
+.page-body .wrap > .part:first-child{opacity:0;transform:translateY(26px);
+  animation:pageIn .8s var(--ease-out) .35s forwards}
+.page-body .wrap > .part:nth-child(2){opacity:0;transform:translateY(26px);
+  animation:pageIn .8s var(--ease-out) .5s forwards}
+
+.page-body{position:relative;padding:80px clamp(20px,6vw,90px) 140px}
+.page-body .wrap{max-width:920px;margin:0 auto}
+.page-body h3{font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;font-size:clamp(1.4rem,2.8vw,2rem);letter-spacing:.02em;
+  margin-bottom:16px;margin-top:48px;color:var(--text-primary)}
+.page-body h3:first-child{margin-top:0}
+.page-body p{color:var(--text-secondary);font-size:1.04rem;line-height:1.7;
+  max-width:65ch;margin-bottom:18px}
+.page-body p.lead{color:var(--text-primary);font-size:1.14rem;max-width:58ch}
+.page-body ul{list-style:none;margin:12px 0 24px;display:flex;flex-direction:column;gap:10px}
+.page-body ul li{color:var(--text-secondary);font-size:1rem;padding-left:20px;position:relative}
+.page-body ul li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;
+  border-radius:50%;background:var(--accent)}
+.page-body .divider{height:1px;background:rgba(242,235,224,.08);margin:48px 0;border:none}
+.page-body .highlight-box{background:var(--panel);border:1px solid var(--accent-muted);
+  border-radius:16px;padding:36px 32px;margin:32px 0}
+.page-body .highlight-box h4{font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;font-size:1.3rem;color:var(--accent);margin-bottom:12px}
+.page-body .highlight-box p{margin-bottom:0}
+
+.service-card{background:var(--panel);border:1px solid rgba(242,235,224,.09);border-radius:16px;
+  padding:36px 32px;margin-bottom:20px}
+.service-card h4{font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;font-size:1.4rem;letter-spacing:.02em;margin-bottom:12px}
+.service-card p{color:var(--text-secondary);font-size:1rem;line-height:1.65;margin-bottom:0}
+.service-card .tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.66rem;
+  letter-spacing:.18em;color:var(--accent);border:1px solid var(--accent-muted);
+  border-radius:6px;padding:4px 10px;margin-bottom:14px}
+
+.testimonial{background:var(--panel);border:1px solid rgba(242,235,224,.09);border-radius:16px;
+  padding:36px 32px;margin-bottom:20px}
+.testimonial blockquote{font-size:1.12rem;line-height:1.6;color:var(--text-primary);
+  font-style:normal;margin-bottom:16px}
+.testimonial figcaption{font-family:"IBM Plex Mono",monospace;font-size:.7rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--text-secondary)}
+
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin:32px 0}
+.hours-col h4{font-family:"Big Shoulders Display",sans-serif;font-weight:700;
+  text-transform:uppercase;font-size:1.2rem;color:var(--accent);margin-bottom:16px}
+.hours-row{display:flex;justify-content:space-between;padding:10px 0;
+  border-bottom:1px solid rgba(242,235,224,.06);color:var(--text-secondary);font-size:.98rem}
+.hours-row .day{color:var(--text-primary)}
+.hours-row .time{font-family:"IBM Plex Mono",monospace;font-size:.9rem}
+
+.cta-strip{background:var(--panel);border:1px solid var(--accent-muted);border-radius:16px;
+  padding:44px 40px;margin:48px 0;display:flex;align-items:center;justify-content:space-between;
+  gap:24px;flex-wrap:wrap}
+.cta-strip-text h3{font-family:"Big Shoulders Display",sans-serif;font-weight:800;
+  text-transform:uppercase;font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px}
+.cta-strip-text p{color:var(--text-secondary);font-size:1rem;margin:0}
+
+@media (max-width:900px){
+  .hours-grid{grid-template-columns:1fr}
+  .cta-strip{flex-direction:column;text-align:center}
+}
+@media (max-width:720px){
+  .page-hero{min-height:36vh;padding-bottom:50px}
+  .page-body{padding:60px 20px 100px}
 }
