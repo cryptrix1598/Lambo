@@ -1,4 +1,4 @@
-/* Charlie's Auto Body Shop — scroll-scrub hero + page choreography */
+/* German Car Services — scroll-scrub hero + page choreography */
 (function () {
   'use strict';
 
@@ -151,13 +151,13 @@
   /* ---------- finder demo ---------- */
   var YEARS = []; for (var y = 2026; y >= 1995; y--) YEARS.push(String(y));
   var MAKES = {
-    Ford: ['F-150', 'Explorer', 'Mustang', 'Escape', 'Fusion'],
-    Chevrolet: ['Silverado 1500', 'Equinox', 'Malibu', 'Camaro', 'Impala'],
-    Honda: ['Civic', 'Accord', 'CR-V', 'Pilot', 'Odyssey'],
-    Toyota: ['Camry', 'Corolla', 'RAV4', 'Tacoma', 'Highlander'],
-    Jeep: ['Wrangler', 'Grand Cherokee', 'Cherokee'],
-    Subaru: ['Outback', 'Forester', 'Impreza'],
-    Nissan: ['Altima', 'Sentra', 'Rogue']
+    BMW: ['3 Series', '5 Series', '7 Series', 'X3', 'X5', 'X7'],
+    'Mercedes-Benz': ['C-Class', 'E-Class', 'S-Class', 'GLC', 'GLE', 'CLA'],
+    Audi: ['A4', 'A6', 'Q5', 'Q7', 'A3', 'A5'],
+    Porsche: ['Cayenne', 'Macan', '911', 'Panamera', 'Cayman'],
+    Volkswagen: ['Golf', 'Tiguan', 'Atlas', 'Passat', 'Taos'],
+    Toyota: ['Camry', 'Corolla', 'RAV4', 'Highlander'],
+    Honda: ['Civic', 'Accord', 'CR-V', 'Pilot']
   };
   var fYear = document.getElementById('fYear');
   var fMake = document.getElementById('fMake');
